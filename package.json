@@ -1,6 +1,6 @@
 {
   "name": "zoomapi",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha2",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "description": "NodeJS library for working with the Zoom API.",
@@ -12,7 +12,9 @@
   "homepage": "https://github.com/sedenardi/zoomapi",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "eslint": "eslint --ext .ts src/**",
+    "prepare": "npm run eslint && npm run build"
   },
   "dependencies": {
     "jsonwebtoken": "^8.5.1"
