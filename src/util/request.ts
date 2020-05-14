@@ -5,21 +5,24 @@ import { ZoomOptions } from '../';
 const BASE_URL = 'api.zoom.us';
 const API_VERSION = '/v2';
 
+type QueryParams = {
+  [key: string]: string | number;
+};
 type ZoomRequestOpts = {
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   path: string;
-  params?: object;
+  params?: QueryParams;
   body?: object;
 };
 
-const buildURL = function(url: string, params?: object) {
+const buildURL = function(url: string, params?: QueryParams) {
   if (!params) {
     return url;
   }
   const sp = new URLSearchParams();
   for (const k in params) {
     if (params[k] !== undefined) {
-      sp.set(k, params[k]);
+      sp.set(k, params[k].toString());
     }
   }
   return url + '?' + sp.toString();
@@ -43,7 +46,7 @@ export default function(zoomApiOpts: ZoomOptions) {
           return reject(new Error(`HTTPS request failed, status code: ${res.statusCode}`));
         }
 
-        const data = [];
+        const data: any[] = [];
         res.on('data', (chunk) => {
           data.push(chunk);
         });
