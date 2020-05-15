@@ -59,7 +59,8 @@ export default function(zoomApiOpts: ZoomOptions) {
           data.push(chunk);
         });
         res.on('end', () => {
-          const body = JSON.parse(Buffer.concat(data).toString());
+          const dataStr = Buffer.concat(data).toString();
+          const body = dataStr ? JSON.parse(dataStr) : {};
           if (res.statusCode < 200 || res.statusCode >= 300) {
             reject(new ZoomError(res.statusCode, body.code, body.message));
           } else {
