@@ -63,7 +63,7 @@ export default function(zoomApiOpts: ZoomOptions) {
           if (res.statusCode < 200 || res.statusCode >= 300) {
             reject(new ZoomError(res.statusCode, body.code, body.message));
           } else {
-            resolve(JSON.parse(body.toString()));
+            resolve(body);
           }
         });
       });
