@@ -14,8 +14,6 @@ export type MeetingSettings = {
   registration_type?: 1 | 2 | 3;
   audio?: 'both' | 'telephony' | 'voip';
   auto_recording?: 'local' | 'cloud' | 'none';
-  enforce_login?: boolean;
-  enforce_login_domains?: string;
   alternative_hosts?: string;
   close_registration?: boolean;
   waiting_room?: boolean;
