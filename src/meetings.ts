@@ -1,6 +1,8 @@
 import request from './util/request';
 import { ZoomOptions, PaginatedResponse } from '.';
 
+export type MeetingType = 1 | 2 | 3 | 8;
+
 export type MeetingSettings = {
   host_video?: boolean;
   participant_video?: boolean;
@@ -50,7 +52,7 @@ export type Meeting = {
   id?: string;
   host_id?: string;
   topic?: string;
-  type?: 1 | 2 | 3 | 8;
+  type?: MeetingType;
   start_time?: string;
   duration?: number;
   schedule_for?: string;
