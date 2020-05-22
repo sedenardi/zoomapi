@@ -26,7 +26,9 @@ export type WebhookMeeting = {
   host_id: string;
 };
 
-export type WebhookMeetingWithParticipant = WebhookMeeting & WebhookParticipant;
+export type WebhookMeetingWithParticipant = WebhookMeeting & {
+  participant: WebhookParticipant
+};
 
 export type WebhookMeetingStarted = WebhookResponse<
   'meeting.started',
@@ -52,3 +54,10 @@ export type WebhookMeetingEnded = WebhookResponse<
   'meeting.ended',
   WebhookMeeting
 >;
+
+export type WebhookEvent =
+  WebhookMeetingStarted |
+  WebhookJoinBeforeHost |
+  WebhookParticipantJoined |
+  WebhookParticipantLeft |
+  WebhookMeetingEnded;

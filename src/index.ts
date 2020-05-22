@@ -18,3 +18,7 @@ export default function(zoomApiOpts: ZoomOptions) {
     meetings: meetings(zoomApiOpts)
   };
 }
+
+export * from './webhooks';
+export * from './users';
+export * from './meetings';
