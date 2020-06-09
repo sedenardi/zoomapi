@@ -1,5 +1,22 @@
 import request from './util/request';
-import { ZoomOptions, PaginatedResponse } from '.';
+import {
+  ZoomOptions,
+  PaginatedResponse,
+  TrackingField,
+  Occurrence,
+  ApprovalType,
+  RegistrationType,
+  Audio,
+  AudioRecording,
+  Recurrence,
+  ListRegistrantsParams,
+  Registrant,
+  ListRegistrantsResponse,
+  AddRegistrantParams,
+  AddRegistrantResponse,
+  UpdateRegistrantStatusBody,
+  UpdateRegistrantStatusParams
+} from './common';
 
 /**
  * 1 - Instant meeting.
@@ -18,20 +35,10 @@ export type MeetingSettings = {
   mute_upon_entry?: boolean;
   watermark?: boolean;
   use_pmi?: boolean;
-  /**
-   * 0 - Automatically approve.
-   * 1 - Manually approve.
-   * 2 - No registration required.
-   */
-  approval_type?: 0 | 1 | 2;
-  /**
-   * 1 - Attendees register once and can attend any of the occurrences.
-   * 2 - Attendees need to register for each occurrence to attend.
-   * 3 - Attendees register once and can choose one or more occurrences to attend.
-   */
-  registration_type?: 1 | 2 | 3;
-  audio?: 'both' | 'telephony' | 'voip';
-  auto_recording?: 'local' | 'cloud' | 'none';
+  approval_type?: ApprovalType;
+  registration_type?: RegistrationType;
+  audio?: Audio;
+  auto_recording?: AudioRecording;
   alternative_hosts?: string;
   close_registration?: boolean;
   waiting_room?: boolean;
@@ -53,21 +60,6 @@ export type MeetingSettings = {
   authentication_name?: string;
   additional_data_center_regions?: string[];
 };
-export type MeetingRecurrence = {
-  /**
-   * 1 - Daily.
-   * 2 - Weekly.
-   * 3 - Monthly.
-   */
-  type: 1 | 2 | 3;
-  repeat_interval: number;
-  weekly_days: string;
-  monthly_day: number;
-  monthly_week: number;
-  monthly_week_day: number;
-  end_times: number;
-  end_date_time: string;
-};
 export type Meeting = {
   uuid?: string;
   id?: string;
@@ -86,18 +78,10 @@ export type Meeting = {
   h323_password?: string;
   encrypted_password?: string;
   pmi?: number;
-  tracking_fields?: {
-    field: string;
-    value: string;
-  }[];
-  occurrences?: {
-    occurrence_id: string;
-    start_time: string;
-    duration: number;
-    status: string;
-  }[];
+  tracking_fields?: TrackingField[];
+  occurrences?: Occurrence[];
   settings?: MeetingSettings;
-  recurrence?: MeetingRecurrence;
+  recurrence?: Recurrence;
 };
 export type ListMeetingsParams = {
   type?: 'scheduled' | 'live' | 'upcoming';
@@ -113,60 +97,6 @@ export type GetMeetingParams = {
 export type DeleteMeetingParams = {
   occurrence_id?: string;
   schedule_for_reminder?: boolean;
-};
-export type RegistrantStatus = 'approved' | 'pending' | 'denied';
-export type ListRegistrantsParams = {
-  occurrence_id?: string;
-  status?: RegistrantStatus;
-  page_size?: number;
-  page_number?: number;
-};
-export type Question = {
-  title: string;
-  value?: string;
-};
-export type MeetingRegistrant = {
-  id?: string;
-  email: string;
-  first_name: string;
-  last_name?: string;
-  address?: string;
-  city?: string;
-  country?: string;
-  zip?: string;
-  state?: string;
-  phone?: string;
-  industry?: string;
-  org?: string;
-  job_title?: string;
-  purchasing_time_frame?: string;
-  role_in_purchase_process?: string;
-  no_of_employees?: string;
-  comments?: string;
-  custom_questions?: Question[];
-  status?: RegistrantStatus;
-  create_time?: string;
-  join_url?: string;
-};
-export type ListRegistrantsResponse = PaginatedResponse & {
-  registrants: MeetingRegistrant[];
-};
-export type AddRegistrantParams = {
-  occurrence_ids?: string;
-};
-export type AddRegistrantResponse = {
-  id: number;
-  join_url: string;
-  registrant_id: string;
-  start_time: string;
-  topic: string;
-};
-export type UpdateRegistrantStatusBody = {
-  action: 'approve' | 'cancel' | 'deny';
-  registrants: Partial<Pick<MeetingRegistrant, 'id' | 'email'>>[];
-};
-export type UpdateRegistrantStatusParams = {
-  occurrence_id?: string;
 };
 
 export default function(zoomApiOpts: ZoomOptions) {
@@ -215,7 +145,7 @@ export default function(zoomApiOpts: ZoomOptions) {
       params: params
     });
   };
-  const AddRegistrant = function(meetingId: string, registrant: MeetingRegistrant, params?: AddRegistrantParams) {
+  const AddRegistrant = function(meetingId: string, registrant: Registrant, params?: AddRegistrantParams) {
     return zoomRequest<AddRegistrantResponse>({
       method: 'POST',
       path: `/meetings/${meetingId}/registrants`,

@@ -1,5 +1,5 @@
 import request from './util/request';
-import { ZoomOptions, PaginatedResponse } from '.';
+import { ZoomOptions, PaginatedResponse } from './common';
 
 export type User = {
   id: string;

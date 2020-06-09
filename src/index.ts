@@ -1,17 +1,7 @@
 import users from './users';
 import meetings from './meetings';
+import { ZoomOptions } from './common';
 
-export type ZoomOptions = {
-  apiKey: string;
-  apiSecret: string;
-  tokenExpiresIn?: string | number;
-};
-export type PaginatedResponse = {
-  page_count: number;
-  page_number: number;
-  page_size: number;
-  total_records: number;
-};
 export default function(zoomApiOpts: ZoomOptions) {
   return {
     users: users(zoomApiOpts),
@@ -20,5 +10,6 @@ export default function(zoomApiOpts: ZoomOptions) {
 }
 
 export * from './webhooks';
+export * from './common';
 export * from './users';
 export * from './meetings';
