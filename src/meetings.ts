@@ -98,6 +98,9 @@ export type DeleteMeetingParams = {
   occurrence_id?: string;
   schedule_for_reminder?: boolean;
 };
+export type UpdateMeetingStatusParams = {
+  action: 'end';
+};
 
 export default function(zoomApiOpts: ZoomOptions) {
   const zoomRequest = request(zoomApiOpts);
@@ -129,6 +132,13 @@ export default function(zoomApiOpts: ZoomOptions) {
       path: `/meetings/${meetingId}`,
       params: params,
       body: meeting
+    });
+  };
+  const UpdateMeetingStatus = function (meetingId: string, body: UpdateMeetingStatusParams) {
+    return zoomRequest<{}>({
+      method: 'PUT',
+      path: `/meetings/${meetingId}/status`,
+      body: body
     });
   };
   const DeleteMeeting = function(meetingId: string, params?: DeleteMeetingParams) {
@@ -171,6 +181,7 @@ export default function(zoomApiOpts: ZoomOptions) {
     CreateMeeting,
     GetMeeting,
     UpdateMeeting,
+    UpdateMeetingStatus,
     DeleteMeeting,
     ListRegistrants,
     AddRegistrant,
