@@ -101,6 +101,9 @@ export type DeleteMeetingParams = {
 export type UpdateMeetingStatusParams = {
   action: 'end';
 };
+export type GetMeetingInvitationResponse = {
+  invitation: string;
+};
 
 export default function(zoomApiOpts: ZoomOptions) {
   const zoomRequest = request(zoomApiOpts);
@@ -175,6 +178,14 @@ export default function(zoomApiOpts: ZoomOptions) {
       body: body
     });
   };
+  const GetMeetingInvitation = function(
+    meetingId: string
+  ) {
+    return zoomRequest<GetMeetingInvitationResponse>({
+      method: 'GET',
+      path: `/meetings/${meetingId}/invitation`,
+    });
+  };
 
   return {
     ListMeetings,
@@ -185,6 +196,7 @@ export default function(zoomApiOpts: ZoomOptions) {
     DeleteMeeting,
     ListRegistrants,
     AddRegistrant,
-    UpdateRegistrantStatus
+    UpdateRegistrantStatus,
+    GetMeetingInvitation
   };
 }
