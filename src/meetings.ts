@@ -104,6 +104,41 @@ export type UpdateMeetingStatusParams = {
 export type GetMeetingInvitationResponse = {
   invitation: string;
 };
+export type GetMeetingRecordingsResponse = {
+  uuid: string;
+  id: string;
+  account_id: string;
+  host_id: string;
+  topic: string;
+  start_time: string;
+  duration: number;
+  total_size: string;
+  recording_count: string;
+  recording_files: {
+    id: string;
+    meeting_id: string;
+    recording_start: string;
+    recording_end: string;
+    file_type: 'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC'
+    file_size: number
+    play_url: string
+    download_url: string
+    status: string
+    deleted_time: string
+    recording_type:
+      | 'shared_screen_with_speaker_view(CC)'
+      | 'shared_screen_with_speaker_view'
+      | 'shared_screen_with_gallery_view'
+      | 'speaker_view'
+      | 'gallery_view'
+      | 'shared_screen'
+      | 'audio_only'
+      | 'audio_transcript'
+      | 'chat_file'
+      | 'TIMELINE'
+      | 'active_speaker'
+  }[]
+};
 
 export default function(zoomApiOpts: ZoomOptions) {
   const zoomRequest = request(zoomApiOpts);
@@ -171,7 +206,7 @@ export default function(zoomApiOpts: ZoomOptions) {
     body: UpdateRegistrantStatusBody,
     params?: UpdateRegistrantStatusParams
   ) {
-    return zoomRequest<{}>({
+    return zoomRequest<GetMeetingRecordingsResponse>({
       method: 'PUT',
       path: `/meetings/${meetingId}/registrants/status`,
       params: params,
@@ -186,6 +221,12 @@ export default function(zoomApiOpts: ZoomOptions) {
       path: `/meetings/${meetingId}/invitation`,
     });
   };
+  const GetMeetingRecordings = function(meetingId: string) {
+    return zoomRequest<{}>({
+      method: 'GET',
+      path: `/meetings/${meetingId}/recordings`,
+    });
+  };
 
   return {
     ListMeetings,
@@ -197,6 +238,7 @@ export default function(zoomApiOpts: ZoomOptions) {
     ListRegistrants,
     AddRegistrant,
     UpdateRegistrantStatus,
-    GetMeetingInvitation
+    GetMeetingInvitation,
+    GetMeetingRecordings
   };
 }
