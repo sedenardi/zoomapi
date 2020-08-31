@@ -222,7 +222,7 @@ export default function(zoomApiOpts: ZoomOptions) {
     });
   };
   const GetMeetingRecordings = function(meetingId: string) {
-    return zoomRequest<{}>({
+    return zoomRequest<GetMeetingRecordingsResponse>({
       method: 'GET',
       path: `/meetings/${meetingId}/recordings`,
     });
