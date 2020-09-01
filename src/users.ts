@@ -45,6 +45,12 @@ export type ListUserResponse = PaginatedResponse & {
 export type GetUserParams = {
   login_type?: '0' | '1' | '99' | '100' | '101';
 };
+export type GetUserTokenParams = {
+  type?: 'token' | 'zak';
+};
+export type GetUserTokenResponse = {
+  token: string;
+};
 
 export default function(zoomApiOpts: ZoomOptions) {
   const zoomRequest = request(zoomApiOpts);
@@ -63,9 +69,17 @@ export default function(zoomApiOpts: ZoomOptions) {
       params: params
     });
   };
+  const GetUserToken = function(userId: string, params?: GetUserTokenParams) {
+    return zoomRequest<GetUserTokenResponse>({
+      method: 'GET',
+      path: `/users/${userId}/token`,
+      params: params
+    });
+  };
   
   return {
     ListUsers,
-    GetUser
+    GetUser,
+    GetUserToken
   };
 }
