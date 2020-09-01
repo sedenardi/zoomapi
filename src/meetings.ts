@@ -206,7 +206,7 @@ export default function(zoomApiOpts: ZoomOptions) {
     body: UpdateRegistrantStatusBody,
     params?: UpdateRegistrantStatusParams
   ) {
-    return zoomRequest<GetMeetingRecordingsResponse>({
+    return zoomRequest<{}>({
       method: 'PUT',
       path: `/meetings/${meetingId}/registrants/status`,
       params: params,
