@@ -116,7 +116,7 @@ export default function(zoomApiOpts: ZoomOptions) {
       params: params
     });
   };
-  const CreateUser = function(body?: CreateUserBody) {
+  const CreateUser = function(body: CreateUserBody) {
     return zoomRequest<CreateUserResponse>({
       method: 'POST',
       path: '/users',
