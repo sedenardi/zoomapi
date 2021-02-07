@@ -91,6 +91,15 @@ export type DeleteUserParams = {
   transfer_webinar?: boolean;
   transfer_recording?: boolean;
 };
+export type UpdatePresenceStatusBody = {
+  status: 'Available' | 'Away' | 'Do_Not_Disturb';
+
+  /**
+   * If you’re updating the status to "Do_Not_Disturb", specify a duration in minutes for which the status should remain as "Do_Not_Disturb".
+   * The default value is 20 minutes and the maximum allowed value is 1440 minutes.
+   */
+  duration?: number;
+};
 
 export default function(zoomApiOpts: ZoomOptions) {
   const zoomRequest = request(zoomApiOpts);
@@ -130,6 +139,13 @@ export default function(zoomApiOpts: ZoomOptions) {
       params: params
     });
   };
+  const UpdatePresenceStatus = function(userId: string, body?: UpdatePresenceStatusBody) {
+    return zoomRequest<{}>({
+      method: 'PUT',
+      path: `/users/${userId}/presence_status`,
+      body: body
+    });
+  };
   
   return {
     ListUsers,
@@ -137,5 +153,6 @@ export default function(zoomApiOpts: ZoomOptions) {
     GetUserToken,
     CreateUser,
     DeleteUser,
+    UpdatePresenceStatus
   };
 }
