@@ -1,6 +1,5 @@
 import request from './util/request';
 import {
-  ZoomOptions,
   PaginatedResponse,
   TrackingField,
   Occurrence,
@@ -140,9 +139,7 @@ export type GetMeetingRecordingsResponse = {
   }[]
 };
 
-export default function(zoomApiOpts: ZoomOptions) {
-  const zoomRequest = request(zoomApiOpts);
-
+export default function(zoomRequest: ReturnType<typeof request>) {
   const ListMeetings = function(userId: string, params?: ListMeetingsParams) {
     return zoomRequest<ListMeetingsResponse>({
       method: 'GET',
