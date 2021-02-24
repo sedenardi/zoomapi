@@ -1,6 +1,5 @@
 import request from './util/request';
 import {
-  ZoomOptions,
   PaginatedResponse,
   TrackingField,
   Occurrence,
@@ -105,9 +104,7 @@ export type WebinarQAResponse = Pick<Webinar, 'id' | 'uuid' | 'start_time'> & {
   questions: WebinarQA[];
 };
 
-export default function(zoomApiOpts: ZoomOptions) {
-  const zoomRequest = request(zoomApiOpts);
-
+export default function(zoomRequest: ReturnType<typeof request>) {
   const ListWebinars = function(userId: string, params?: ListWebinarsParams) {
     return zoomRequest<ListWebinarsResponse>({
       method: 'GET',

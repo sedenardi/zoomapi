@@ -1,5 +1,5 @@
 import request from './util/request';
-import { ZoomOptions, PaginatedResponse } from './common';
+import { PaginatedResponse } from './common';
 
 /**
  * 1 - Basic.
@@ -101,9 +101,7 @@ export type UpdatePresenceStatusBody = {
   duration?: number;
 };
 
-export default function(zoomApiOpts: ZoomOptions) {
-  const zoomRequest = request(zoomApiOpts);
-
+export default function(zoomRequest: ReturnType<typeof request>) {
   const ListUsers = function(params?: ListUsersParams) {
     return zoomRequest<ListUserResponse>({
       method: 'GET',
@@ -146,7 +144,7 @@ export default function(zoomApiOpts: ZoomOptions) {
       body: body
     });
   };
-  
+
   return {
     ListUsers,
     GetUser,
