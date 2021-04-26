@@ -14,7 +14,9 @@ import {
   AddRegistrantParams,
   AddRegistrantResponse,
   UpdateRegistrantStatusBody,
-  UpdateRegistrantStatusParams
+  UpdateRegistrantStatusParams,
+  ZoomMeetingRecordingType,
+  ZoomMeetingRecordingFileType
 } from './common';
 
 /**
@@ -118,24 +120,13 @@ export type GetMeetingRecordingsResponse = {
     meeting_id: string;
     recording_start: string;
     recording_end: string;
-    file_type: 'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC'
+    file_type: ZoomMeetingRecordingFileType
     file_size: number
     play_url: string
     download_url: string
     status: string
     deleted_time: string
-    recording_type:
-      | 'shared_screen_with_speaker_view(CC)'
-      | 'shared_screen_with_speaker_view'
-      | 'shared_screen_with_gallery_view'
-      | 'speaker_view'
-      | 'gallery_view'
-      | 'shared_screen'
-      | 'audio_only'
-      | 'audio_transcript'
-      | 'chat_file'
-      | 'TIMELINE'
-      | 'active_speaker'
+    recording_type: ZoomMeetingRecordingType
   }[]
 };
 
