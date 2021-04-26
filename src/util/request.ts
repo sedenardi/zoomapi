@@ -1,83 +1,83 @@
-import https from 'https';
-import getAuthToken from './getAuthToken';
-import { ZoomOptions } from '../';
+import https from 'https'
+import getAuthToken from './getAuthToken'
+import { ZoomOptions } from '../'
 
-const BASE_URL = 'api.zoom.us';
-const API_VERSION = '/v2';
+const BASE_URL = 'api.zoom.us'
+const API_VERSION = '/v2'
 
 type QueryParams = {
-  [key: string]: string | number | boolean;
-};
+  [key: string]: string | number | boolean
+}
 type ZoomRequestOpts = {
-  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-  path: string;
-  params?: QueryParams;
-  body?: object;
-};
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+  path: string
+  params?: QueryParams
+  body?: object
+}
 
 class ZoomError extends Error {
-  httpStatusCode: number;
-  errorCode?: number;
+  httpStatusCode: number
+  errorCode?: number
   constructor(httpStatusCode: number, errorCode: number, message: string) {
-    super();
-    this.httpStatusCode = httpStatusCode;
-    this.errorCode = errorCode;
-    this.message = message;
+    super()
+    this.httpStatusCode = httpStatusCode
+    this.errorCode = errorCode
+    this.message = message
   }
 }
 
-const buildURL = function(url: string, params?: QueryParams) {
+const buildURL = function (url: string, params?: QueryParams) {
   if (!params) {
-    return url;
+    return url
   }
-  const sp = new URLSearchParams();
+  const sp = new URLSearchParams()
   for (const k in params) {
     if (params[k] !== undefined) {
-      sp.set(k, params[k].toString());
+      sp.set(k, params[k].toString())
     }
   }
-  const qs = sp.toString();
-  return qs ? `${url}?${sp}` : url;
-};
+  const qs = sp.toString()
+  return qs ? `${url}?${sp}` : url
+}
 
-export default function(zoomApiOpts: ZoomOptions) {
+export default function (zoomApiOpts: ZoomOptions) {
   return async function zoomRequest<T>(opts: ZoomRequestOpts) {
-    const authToken = await getAuthToken(zoomApiOpts);
+    const authToken = await getAuthToken(zoomApiOpts)
     const requestOpts = {
       method: opts.method,
       hostname: BASE_URL,
       path: API_VERSION + buildURL(opts.path, opts.params),
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${authToken}`
-      }
-    };
+        authorization: `Bearer ${authToken}`,
+      },
+    }
     return await new Promise<T>((resolve, reject) => {
       const httpsRequest = https.request(requestOpts, (res) => {
-        const data: any[] = [];
+        const data: any[] = []
         res.on('data', (chunk) => {
-          data.push(chunk);
-        });
+          data.push(chunk)
+        })
         res.on('end', () => {
-          const dataStr = Buffer.concat(data).toString();
-          const body = dataStr ? JSON.parse(dataStr) : {};
+          const dataStr = Buffer.concat(data).toString()
+          const body = dataStr ? JSON.parse(dataStr) : {}
           if (res.statusCode < 200 || res.statusCode >= 300) {
-            reject(new ZoomError(res.statusCode, body.code, body.message));
+            reject(new ZoomError(res.statusCode, body.code, body.message))
           } else {
-            resolve(body);
+            resolve(body)
           }
-        });
-      });
+        })
+      })
 
       httpsRequest.on('error', (err) => {
-        reject(err);
-      });
+        reject(err)
+      })
 
       if (opts.body) {
-        httpsRequest.write(JSON.stringify(opts.body));
+        httpsRequest.write(JSON.stringify(opts.body))
       }
 
-      httpsRequest.end();
-    });
-  };
+      httpsRequest.end()
+    })
+  }
 }
