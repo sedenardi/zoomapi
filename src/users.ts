@@ -101,6 +101,40 @@ export type UpdatePresenceStatusBody = {
   duration?: number
 }
 
+export type UpdateUserParams = {
+  login_type?: UserLoginType
+}
+export type UpdateUserBody = {
+  first_name?: string
+  last_name?: string
+  type?: UserLoginType
+  pmi?: number
+  use_pmi?: boolean
+  timezone?: string
+  language?: string
+  dept?: string
+  vanity_name?: string
+  host_key?: string
+  cms_user_id?: string
+  job_title?: string
+  company?: string
+  location?: string
+  phone_number?: string
+  phone_country?: string
+  custom_attributes?: {
+    key: string
+    name: string
+    value: string
+  }[]
+  group_id?: string
+  phone_numbers?: {
+    country: string
+    code: string
+    number: string
+  }[]
+  manager?: string
+}
+
 export default function (zoomRequest: ReturnType<typeof request>) {
   const ListUsers = function (params?: ListUsersParams) {
     return zoomRequest<ListUserResponse>({
@@ -144,6 +178,14 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       body: body,
     })
   }
+  const UpdateUser = function (userId: string, params?: UpdateUserParams, body?: UpdateUserBody) {
+    return zoomRequest<{}>({
+      method: 'PATCH',
+      path: `/users/${userId}`,
+      params,
+      body,
+    })
+  }
 
   return {
     ListUsers,
@@ -152,5 +194,6 @@ export default function (zoomRequest: ReturnType<typeof request>) {
     CreateUser,
     DeleteUser,
     UpdatePresenceStatus,
+    UpdateUser,
   }
 }
