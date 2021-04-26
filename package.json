@@ -1,6 +1,6 @@
 {
   "name": "@schoolhouse/zoomapi",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "description": "NodeJS library for working with the Zoom API.",
@@ -8,7 +8,9 @@
     "type": "git",
     "url": "https://github.com/schoolhouse-world/zoomapi.git"
   },
-  "files": ["lib/*"],
+  "files": [
+    "lib/*"
+  ],
   "author": "Sanders DeNardi <sedenardi@gmail.com> (http://www.sandersdenardi.com/)",
   "contributors": [
     "Anees I <i@steelbrain.me>"
