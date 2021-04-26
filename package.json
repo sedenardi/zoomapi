@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/schoolhouse-world/zoomapi.git"
   },
+  "files": ["lib/*"],
   "author": "Sanders DeNardi <sedenardi@gmail.com> (http://www.sandersdenardi.com/)",
   "contributors": [
     "Anees I <i@steelbrain.me>"
