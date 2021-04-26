@@ -38,6 +38,13 @@ export type GetAccountRecordingsResponse = {
   }[];
 };
 
+export type DeleteMeetingRecordingsParams = {
+  action?: 'trash' | 'delete';
+};
+export type DeleteMeetingRecordingsResponse = {
+  // No-op response
+};
+
 export default function recordings(zoomRequest: ReturnType<typeof request>) {
   return {
     GetAccountRecordings(accountId: string, params?: GetAccountRecordingsParams) {
@@ -46,6 +53,13 @@ export default function recordings(zoomRequest: ReturnType<typeof request>) {
         path: `/accounts/${accountId}/recordings`,
         params,
       });
-    }
+    },
+    DeleteMeetingRecordings(meetingId: string, params?: DeleteMeetingRecordingsParams) {
+      return zoomRequest<DeleteMeetingRecordingsResponse>({
+        method: 'DELETE',
+        path: `/meetings/${meetingId}/recordings`,
+        params,
+      });
+    },
   };
 }
