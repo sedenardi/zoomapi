@@ -110,3 +110,18 @@ export type UpdateRegistrantStatusBody = {
 export type UpdateRegistrantStatusParams = {
   occurrence_id?: string
 }
+
+export type ZoomMeetingRecordingFileType = 'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC'
+
+export type ZoomMeetingRecordingType =
+  | 'shared_screen_with_speaker_view(CC)'
+  | 'shared_screen_with_speaker_view'
+  | 'shared_screen_with_gallery_view'
+  | 'speaker_view'
+  | 'gallery_view'
+  | 'shared_screen'
+  | 'audio_only'
+  | 'audio_transcript'
+  | 'chat_file'
+  | 'TIMELINE'
+  | 'active_speaker'
