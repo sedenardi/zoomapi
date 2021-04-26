@@ -1,15 +1,18 @@
 {
-  "name": "zoomapi",
-  "version": "1.5.0",
+  "name": "@schoolhouse/zoomapi",
+  "version": "0.0.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "description": "NodeJS library for working with the Zoom API.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sedenardi/zoomapi.git"
+    "url": "https://github.com/schoolhouse-world/zoomapi.git"
   },
   "author": "Sanders DeNardi <sedenardi@gmail.com> (http://www.sandersdenardi.com/)",
-  "homepage": "https://github.com/sedenardi/zoomapi",
+  "contributors": [
+    "Anees I <i@steelbrain.me>"
+  ],
+  "homepage": "https://github.com/schoolhouse-world/zoomapi",
   "license": "MIT",
   "scripts": {
     "build": "tsc",

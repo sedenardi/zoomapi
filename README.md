@@ -4,14 +4,16 @@ NodeJS library for working with the Zoom API.
 
 `zoomapi` provides server-side access to the [Zoom APIs](https://marketplace.zoom.us/docs/api-reference/introduction) via JWT access tokens. It's written completely in Typescript, and only has one dependency. Works on NodeJS version 8 and higher.
 
-```js
-npm i zoomapi
+```sh
+npm i @schoolhouse/zoomapi
+# or
+yarn add @schoolhouse/zoomapi
 ```
 
 ## Usage
 
 ```js
-import zoomApi from 'zoomapi';
+import zoomApi from '@schoolhouse/zoomapi';
 
 const client = zoomApi({
   apiKey: process.NODE_ENV.ZoomApiKey,
