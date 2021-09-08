@@ -2,6 +2,7 @@ import { PaginatedResponse } from './common';
 import request from './util/request';
 
 export type GetMeetingParticipantReportsParams = {
+  page_size?: number;
   next_page_token?: string;
   include_fields?: 'registrant_id';
 };
