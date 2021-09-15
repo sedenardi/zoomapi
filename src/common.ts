@@ -90,6 +90,30 @@ export type Registrant = {
   create_time?: string;
   join_url?: string;
 };
+export type MetricMeeting = {
+  uuid: string;
+  id: string; // int64 long, string in JS
+  topic: string;
+  host: string;
+  email: string;
+  user_type: string;
+  start_time: string;
+  end_time: string;
+  duration: string;
+  participants: number;
+  has_pstn: boolean;
+  has_voip: boolean;
+  has_3rd_party_audio: boolean;
+  has_video: boolean;
+  has_screen_share: boolean;
+  has_recording: boolean;
+  has_sip: boolean;
+  has_archiving: boolean;
+  in_room_participants: number;
+  dept: string;
+  custom_keys: { key: string; value: string }[];
+  tracking_fields: { field: string; value: string }[]
+};
 export type ListRegistrantsResponse = PaginatedResponse & {
   registrants: Registrant[];
 };

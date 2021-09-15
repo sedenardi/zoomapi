@@ -2,13 +2,13 @@ import { PaginatedResponse } from './common';
 import request from './util/request';
 
 export type GetMeetingParticipantReportsParams = {
-  page_size?: number
-  next_page_token?: string
-  include_fields?: 'registrant_id'
+  page_size?: number;
+  next_page_token?: string;
+  include_fields?: 'registrant_id';
 };
 
 export type GetMeetingParticipantReportsResponse = PaginatedResponse & {
-  next_page_token: string
+  next_page_token: string;
   participants: {
     id: string;
     user_id: string;

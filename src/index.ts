@@ -1,4 +1,5 @@
 import meetings from './meetings';
+import metrics from './metrics';
 import recordings from './recordings';
 import reports from './reports';
 import users from './users';
@@ -12,6 +13,7 @@ export default function(zoomApiOpts: ZoomOptions) {
 
   return {
     meetings: meetings(zoomRequest),
+    metrics: metrics(zoomRequest),
     recordings: recordings(zoomRequest),
     reports: reports(zoomRequest),
     users: users(zoomRequest),
@@ -21,6 +23,7 @@ export default function(zoomApiOpts: ZoomOptions) {
 
 export * from './common';
 export * from './meetings';
+export * from './metrics';
 export * from './recordings';
 export * from './reports';
 export * from './users';
