@@ -15,8 +15,7 @@ import {
   AddRegistrantResponse,
   UpdateRegistrantStatusBody,
   UpdateRegistrantStatusParams,
-  ZoomMeetingRecordingType,
-  ZoomMeetingRecordingFileType,
+  RecordingMeeting,
 } from './common'
 
 /**
@@ -105,30 +104,7 @@ export type UpdateMeetingStatusParams = {
 export type GetMeetingInvitationResponse = {
   invitation: string
 }
-export type GetMeetingRecordingsResponse = {
-  uuid: string
-  id: string
-  account_id: string
-  host_id: string
-  topic: string
-  start_time: string
-  duration: number
-  total_size: string
-  recording_count: string
-  recording_files: {
-    id: string
-    meeting_id: string
-    recording_start: string
-    recording_end: string
-    file_type: ZoomMeetingRecordingFileType
-    file_size: number
-    play_url: string
-    download_url: string
-    status: string
-    deleted_time: string
-    recording_type: ZoomMeetingRecordingType
-  }[]
-}
+export type GetMeetingRecordingsResponse = RecordingMeeting
 
 export default function (zoomRequest: ReturnType<typeof request>) {
   const ListMeetings = function (userId: string, params?: ListMeetingsParams) {

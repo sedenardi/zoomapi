@@ -1,4 +1,4 @@
-import { ZoomMeetingRecordingFileType, ZoomMeetingRecordingType } from './common'
+import { RecordingMeeting } from './common'
 import request from './util/request'
 
 export type GetAccountRecordingsParams = {
@@ -14,28 +14,7 @@ export type GetAccountRecordingsResponse = {
   to: string
   page_size: number
   total_records: number
-  meetings: {
-    uuid: string
-    id: string
-    host_id: string
-    topic: string
-    start_time: string
-    duration: number
-    total_size: number
-    recording_count: number
-    recording_files: {
-      id: string
-      recording_start: string
-      recording_end: string
-      file_type: ZoomMeetingRecordingFileType
-      file_size: number
-      play_url: string
-      download_url: string
-      status: string
-      recording_type: ZoomMeetingRecordingType
-      meeting_id: string
-    }[]
-  }[]
+  meetings: RecordingMeeting[]
 }
 
 export type DeleteMeetingRecordingsParams = {
