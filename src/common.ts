@@ -160,7 +160,7 @@ export type UpdateRegistrantStatusParams = {
 };
 
 export type ZoomMeetingRecordingFileType =
-  'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC';
+  'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC' | 'CSV';
 
 export type ZoomMeetingRecordingType =
 | 'shared_screen_with_speaker_view(CC)'
@@ -172,5 +172,7 @@ export type ZoomMeetingRecordingType =
 | 'audio_only'
 | 'audio_transcript'
 | 'chat_file'
-| 'TIMELINE'
-| 'active_speaker';
+| 'active_speaker'
+| 'poll'
+| 'timeline'
+| 'closed_caption';
