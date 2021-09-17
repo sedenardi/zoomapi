@@ -14,7 +14,8 @@ import {
   AddRegistrantParams,
   AddRegistrantResponse,
   UpdateRegistrantStatusBody,
-  UpdateRegistrantStatusParams
+  UpdateRegistrantStatusParams,
+  RecordingMeeting,
 } from './common';
 
 /**
@@ -103,41 +104,7 @@ export type UpdateMeetingStatusParams = {
 export type GetMeetingInvitationResponse = {
   invitation: string;
 };
-export type GetMeetingRecordingsResponse = {
-  uuid: string;
-  id: string;
-  account_id: string;
-  host_id: string;
-  topic: string;
-  start_time: string;
-  duration: number;
-  total_size: string;
-  recording_count: string;
-  recording_files: {
-    id: string;
-    meeting_id: string;
-    recording_start: string;
-    recording_end: string;
-    file_type: 'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC'
-    file_size: number
-    play_url: string
-    download_url: string
-    status: string
-    deleted_time: string
-    recording_type:
-      | 'shared_screen_with_speaker_view(CC)'
-      | 'shared_screen_with_speaker_view'
-      | 'shared_screen_with_gallery_view'
-      | 'speaker_view'
-      | 'gallery_view'
-      | 'shared_screen'
-      | 'audio_only'
-      | 'audio_transcript'
-      | 'chat_file'
-      | 'TIMELINE'
-      | 'active_speaker'
-  }[]
-};
+export type GetMeetingRecordingsResponse = RecordingMeeting;
 
 export default function(zoomRequest: ReturnType<typeof request>) {
   const ListMeetings = function(userId: string, params?: ListMeetingsParams) {

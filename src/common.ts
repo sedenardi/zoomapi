@@ -114,6 +114,30 @@ export type MetricMeeting = {
   custom_keys: { key: string; value: string }[];
   tracking_fields: { field: string; value: string }[]
 };
+export type RecordingMeeting = {
+  uuid: string;
+  id: string;
+  account_id: string;
+  host_id: string;
+  topic: string;
+  start_time: string;
+  duration: number;
+  total_size: string;
+  recording_count: string;
+  recording_files: {
+    id: string;
+    meeting_id: string;
+    recording_start: string;
+    recording_end: string;
+    file_type: ZoomMeetingRecordingFileType
+    file_size: number
+    play_url: string
+    download_url: string
+    status: string
+    deleted_time: string
+    recording_type: ZoomMeetingRecordingType
+  }[]
+};
 export type ListRegistrantsResponse = PaginatedResponse & {
   registrants: Registrant[];
 };
@@ -134,3 +158,21 @@ export type UpdateRegistrantStatusBody = {
 export type UpdateRegistrantStatusParams = {
   occurrence_id?: string;
 };
+
+export type ZoomMeetingRecordingFileType =
+  'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC' | 'CSV';
+
+export type ZoomMeetingRecordingType =
+| 'shared_screen_with_speaker_view(CC)'
+| 'shared_screen_with_speaker_view'
+| 'shared_screen_with_gallery_view'
+| 'speaker_view'
+| 'gallery_view'
+| 'shared_screen'
+| 'audio_only'
+| 'audio_transcript'
+| 'chat_file'
+| 'active_speaker'
+| 'poll'
+| 'timeline'
+| 'closed_caption';
