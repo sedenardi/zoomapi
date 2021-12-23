@@ -64,12 +64,16 @@ export type Webinar = {
   join_url?: string;
   agenda?: string;
   start_time?: string;
+};
+export type WebinarDetails = Webinar & {
   start_url?: string;
   tracking_fields?: TrackingField[];
   occurrences?: Occurrence[];
   settings?: WebinarSettings;
   recurrence?: Recurrence;
   password?: string;
+  /** Not documented but present in API response. */
+  registration_url?: string;
 };
 export type ListWebinarsParams = {
   page_size?: number;
@@ -120,7 +124,7 @@ export default function(zoomRequest: ReturnType<typeof request>) {
     });
   };
   const GetWebinar = function(webinarId: string, params?: GetWebinarParams) {
-    return zoomRequest<ListWebinarsResponse>({
+    return zoomRequest<WebinarDetails>({
       method: 'GET',
       path: `/webinars/${webinarId}`,
       params: params

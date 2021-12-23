@@ -1,6 +1,6 @@
 {
   "name": "zoomapi",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "description": "NodeJS library for working with the Zoom API.",
