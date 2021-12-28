@@ -203,6 +203,12 @@ export default function(zoomRequest: ReturnType<typeof request>) {
       path: `/past_webinars/${webinarId}/qa`
     });
   };
+  const DeleteWebinarRegistrant = function(webinarId: string, registrantId: string) {
+    return zoomRequest<{}>({
+      method: 'DELETE',
+      path: `/webinars/${webinarId}/registrants/${registrantId}`
+    });
+  };
 
   return {
     ListWebinars,
@@ -217,6 +223,7 @@ export default function(zoomRequest: ReturnType<typeof request>) {
     ListWebinarRegistrants,
     AddWebinarRegistrant,
     UpdateWebinarRegistrantStatus,
-    ListPastWebinarQA
+    ListPastWebinarQA,
+    DeleteWebinarRegistrant
   };
 }
