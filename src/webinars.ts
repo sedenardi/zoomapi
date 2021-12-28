@@ -117,7 +117,7 @@ export type WebinarRegistrationQuestions = {
     type: 'short' | 'single_radio' | 'single_dropdown' | 'multiple';
     required: boolean;
     answers: string[];
-  }
+  }[];
 };
 
 export default function(zoomRequest: ReturnType<typeof request>) {
