@@ -107,6 +107,18 @@ export type WebinarQA = {
 export type WebinarQAResponse = Pick<Webinar, 'id' | 'uuid' | 'start_time'> & {
   questions: WebinarQA[];
 };
+export type WebinarRegistrationQuestions = {
+  questions: {
+    field_name: string;
+    required: boolean;
+  }[];
+  custom_questions: {
+    title: string;
+    type: 'short' | 'single_radio' | 'single_dropdown' | 'multiple';
+    required: boolean;
+    answers: string[];
+  }
+};
 
 export default function(zoomRequest: ReturnType<typeof request>) {
   const ListWebinars = function(userId: string, params?: ListWebinarsParams) {
@@ -209,6 +221,12 @@ export default function(zoomRequest: ReturnType<typeof request>) {
       path: `/webinars/${webinarId}/registrants/${registrantId}`
     });
   };
+  const ListRegistrationQuestions = function(webinarId: string) {
+    return zoomRequest<WebinarRegistrationQuestions>({
+      method: 'GET',
+      path: `/webinars/${webinarId}/registrants/questions`
+    });
+  };
 
   return {
     ListWebinars,
@@ -224,6 +242,7 @@ export default function(zoomRequest: ReturnType<typeof request>) {
     AddWebinarRegistrant,
     UpdateWebinarRegistrantStatus,
     ListPastWebinarQA,
-    DeleteWebinarRegistrant
+    DeleteWebinarRegistrant,
+    ListRegistrationQuestions
   };
 }
