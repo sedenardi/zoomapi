@@ -86,6 +86,10 @@ export type GetWebinarParams = {
   occurrence_id?: string;
   show_previous_occurrences?: boolean;
 };
+export type DeleteWebinarParams = {
+  occurrence_id?: string;
+  cancel_webinar_reminder?: 'true' | 'false';
+};
 export type WebinarPanelist = {
   id?: string;
   email: string;
@@ -150,7 +154,7 @@ export default function(zoomRequest: ReturnType<typeof request>) {
       body: webinar
     });
   };
-  const DeleteWebinar = function(webinarId: string, params?: Pick<GetWebinarParams, 'occurrence_id'>) {
+  const DeleteWebinar = function(webinarId: string, params?: DeleteWebinarParams) {
     return zoomRequest<{}>({
       method: 'DELETE',
       path: `/webinars/${webinarId}`,
