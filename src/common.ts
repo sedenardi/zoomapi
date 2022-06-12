@@ -10,6 +10,7 @@ export type PaginatedResponse = ListResponse & {
   page_count: number
   page_number: number
   page_size: number
+  next_page_token?: string
 }
 
 export type TrackingField = {
@@ -62,6 +63,7 @@ export type ListRegistrantsParams = {
   status?: RegistrantStatus
   page_size?: number
   page_number?: number
+  next_page_token?: string
 }
 export type Question = {
   title: string
@@ -159,7 +161,7 @@ export type UpdateRegistrantStatusParams = {
   occurrence_id?: string
 }
 
-export type ZoomMeetingRecordingFileType = 'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC'
+export type ZoomMeetingRecordingFileType = 'MP4' | 'M4A' | 'TIMELINE' | 'TRANSCRIPT' | 'CHAT' | 'CC' | 'CSV'
 
 export type ZoomMeetingRecordingType =
   | 'shared_screen_with_speaker_view(CC)'
@@ -171,5 +173,7 @@ export type ZoomMeetingRecordingType =
   | 'audio_only'
   | 'audio_transcript'
   | 'chat_file'
-  | 'TIMELINE'
   | 'active_speaker'
+  | 'poll'
+  | 'timeline'
+  | 'closed_caption'

@@ -64,12 +64,16 @@ export type Webinar = {
   join_url?: string
   agenda?: string
   start_time?: string
+}
+export type WebinarDetails = Webinar & {
   start_url?: string
   tracking_fields?: TrackingField[]
   occurrences?: Occurrence[]
   settings?: WebinarSettings
   recurrence?: Recurrence
   password?: string
+  /** Not documented but present in API response. */
+  registration_url?: string
 }
 export type ListWebinarsParams = {
   page_size?: number
@@ -81,6 +85,10 @@ export type ListWebinarsResponse = PaginatedResponse & {
 export type GetWebinarParams = {
   occurrence_id?: string
   show_previous_occurrences?: boolean
+}
+export type DeleteWebinarParams = {
+  occurrence_id?: string
+  cancel_webinar_reminder?: 'true' | 'false'
 }
 export type WebinarPanelist = {
   id?: string
@@ -103,6 +111,18 @@ export type WebinarQA = {
 export type WebinarQAResponse = Pick<Webinar, 'id' | 'uuid' | 'start_time'> & {
   questions: WebinarQA[]
 }
+export type WebinarRegistrationQuestions = {
+  questions: {
+    field_name: string
+    required: boolean
+  }[]
+  custom_questions: {
+    title: string
+    type: 'short' | 'single_radio' | 'single_dropdown' | 'multiple'
+    required: boolean
+    answers: string[]
+  }[]
+}
 
 export default function (zoomRequest: ReturnType<typeof request>) {
   const ListWebinars = function (userId: string, params?: ListWebinarsParams) {
@@ -120,7 +140,7 @@ export default function (zoomRequest: ReturnType<typeof request>) {
     })
   }
   const GetWebinar = function (webinarId: string, params?: GetWebinarParams) {
-    return zoomRequest<ListWebinarsResponse>({
+    return zoomRequest<WebinarDetails>({
       method: 'GET',
       path: `/webinars/${webinarId}`,
       params: params,
@@ -134,7 +154,7 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       body: webinar,
     })
   }
-  const DeleteWebinar = function (webinarId: string, params?: Pick<GetWebinarParams, 'occurrence_id'>) {
+  const DeleteWebinar = function (webinarId: string, params?: DeleteWebinarParams) {
     return zoomRequest<{}>({
       method: 'DELETE',
       path: `/webinars/${webinarId}`,
@@ -199,6 +219,18 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       path: `/past_webinars/${webinarId}/qa`,
     })
   }
+  const DeleteWebinarRegistrant = function (webinarId: string, registrantId: string) {
+    return zoomRequest<{}>({
+      method: 'DELETE',
+      path: `/webinars/${webinarId}/registrants/${registrantId}`,
+    })
+  }
+  const ListRegistrationQuestions = function (webinarId: string) {
+    return zoomRequest<WebinarRegistrationQuestions>({
+      method: 'GET',
+      path: `/webinars/${webinarId}/registrants/questions`,
+    })
+  }
 
   return {
     ListWebinars,
@@ -214,5 +246,7 @@ export default function (zoomRequest: ReturnType<typeof request>) {
     AddWebinarRegistrant,
     UpdateWebinarRegistrantStatus,
     ListPastWebinarQA,
+    DeleteWebinarRegistrant,
+    ListRegistrationQuestions,
   }
 }

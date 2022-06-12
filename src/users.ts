@@ -134,6 +134,30 @@ export type UpdateUserBody = {
   }[]
   manager?: string
 }
+export type UserPermissions = {
+  permissions: string[]
+}
+export type GetUserSettingsParams = {
+  login_type?: UserLoginType
+  option?: 'meeting_authentication' | 'recording_authentication' | 'meeting_security'
+  custom_query_fields?: string
+}
+/** This type definition is incomplete. */
+export type UserSettings = {
+  feature: {
+    meeting_capacity: number
+    large_meeting: boolean
+    large_meeting_capacity: number
+    webinar: boolean
+    webinar_capacity: number
+    zoom_events: boolean
+    zoom_events_capacity: number
+    cn_meeting: boolean
+    in_meeting: boolean
+    zoom_phone: boolean
+    concurrent_meeting: 'Basic' | 'Plus' | 'None'
+  }
+}
 
 export default function (zoomRequest: ReturnType<typeof request>) {
   const ListUsers = function (params?: ListUsersParams) {
@@ -186,6 +210,19 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       body,
     })
   }
+  const GetUserPermissions = function (userId: string) {
+    return zoomRequest<UserPermissions>({
+      method: 'GET',
+      path: `/users/${userId}/permissions`,
+    })
+  }
+  const GetUserSettings = function (userId: string, params?: GetUserSettingsParams) {
+    return zoomRequest<UserSettings>({
+      method: 'GET',
+      path: `/users/${userId}/settings`,
+      params: params,
+    })
+  }
 
   return {
     ListUsers,
@@ -195,5 +232,7 @@ export default function (zoomRequest: ReturnType<typeof request>) {
     DeleteUser,
     UpdatePresenceStatus,
     UpdateUser,
+    GetUserPermissions,
+    GetUserSettings,
   }
 }
