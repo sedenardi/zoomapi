@@ -11,6 +11,9 @@
   "author": "Sanders DeNardi <sedenardi@gmail.com> (http://www.sandersdenardi.com/)",
   "homepage": "https://github.com/sedenardi/zoomapi",
   "license": "MIT",
+  "files": [
+    "lib/*"
+  ],
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf lib",
