@@ -1,3 +1,11 @@
+### 0.0.3
+
+- Handle malformed JSON response from Zoom API
+- Add `GetUserPermissions` from Upstream
+- Add `GetUserSettings` from Upstream
+- Add `DeleteWebinarRegistrant` from Upstream
+- Add `ListRegistrationQuestions` from Upstream
+
 ### 0.0.2
 
 - Add `GetMeetings`
