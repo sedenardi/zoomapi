@@ -17,12 +17,14 @@ type ZoomRequestOpts = {
 
 class ZoomError extends Error {
   httpStatusCode: number;
-  errorCode?: number;
-  constructor(httpStatusCode: number, errorCode: number, message: string) {
+  errorCode: number | null;
+  response: string;
+  constructor(httpStatusCode: number, errorCode: number | null, message: string, response: string) {
     super();
     this.httpStatusCode = httpStatusCode;
     this.errorCode = errorCode;
     this.message = message;
+    this.response = response;
   }
 }
 
@@ -60,9 +62,18 @@ export default function(zoomApiOpts: ZoomOptions) {
         });
         res.on('end', () => {
           const dataStr = Buffer.concat(data).toString();
-          const body = dataStr ? JSON.parse(dataStr) : {};
+          let body = {} as any
+          try {
+            if (dataStr) {
+              body = JSON.parse(dataStr)
+            }
+          } catch (err) {
+            // JSON parse error
+            reject(new ZoomError(res.statusCode, null, `Malformed JSON response from Zoom API`, dataStr))
+            return
+          }
           if (res.statusCode < 200 || res.statusCode >= 300) {
-            reject(new ZoomError(res.statusCode, body.code, body.message));
+            reject(new ZoomError(res.statusCode, body.code, body.message, dataStr));
           } else {
             resolve(body);
           }
