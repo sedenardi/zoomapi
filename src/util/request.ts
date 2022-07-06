@@ -62,15 +62,15 @@ export default function(zoomApiOpts: ZoomOptions) {
         });
         res.on('end', () => {
           const dataStr = Buffer.concat(data).toString();
-          let body = {} as any
+          let body = {} as any;
           try {
             if (dataStr) {
-              body = JSON.parse(dataStr)
+              body = JSON.parse(dataStr);
             }
           } catch (err) {
             // JSON parse error
-            reject(new ZoomError(res.statusCode, null, `Malformed JSON response from Zoom API`, dataStr))
-            return
+            reject(new ZoomError(res.statusCode, null, 'Malformed JSON response from Zoom API', dataStr));
+            return;
           }
           if (res.statusCode < 200 || res.statusCode >= 300) {
             reject(new ZoomError(res.statusCode, body.code, body.message, dataStr));
