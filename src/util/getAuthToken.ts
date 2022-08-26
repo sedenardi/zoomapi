@@ -62,7 +62,7 @@ const getServerToServerOAuthToken = async function(zoomApiOpts: ZoomOAuthOptions
           }
         } catch (err) {
           // JSON parse error
-          reject(new ZoomError(res.statusCode, null, 'Malformed JSON response from Zoom API', dataStr));
+          reject(new ZoomError(res.statusCode, null, 'Malformed JSON response from Zoom OAuth token API', dataStr));
           return;
         }
         if (res.statusCode < 200 || res.statusCode >= 300) {
