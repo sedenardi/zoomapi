@@ -226,7 +226,7 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       params: params,
     })
   }
-  const UpdateUserStatus = function (userId: string, body: body) {
+  const UpdateUserStatus = function (userId: string, body: UpdateUserStatusBody) {
     return zoomRequest<{}>({
       method: 'PUT',
       path: `/users/${userId}/status`,
