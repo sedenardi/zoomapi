@@ -1,3 +1,7 @@
+### 0.0.4
+
+- Add `UpdateUserStatus` (thanks @evantey14)
+
 ### 0.0.3
 
 - Handle malformed JSON response from Zoom API
