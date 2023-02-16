@@ -158,6 +158,9 @@ export type UserSettings = {
     concurrent_meeting: 'Basic' | 'Plus' | 'None'
   }
 }
+export type UpdateUserStatusBody = {
+  action: 'activate' | 'deactivate'
+}
 
 export default function (zoomRequest: ReturnType<typeof request>) {
   const ListUsers = function (params?: ListUsersParams) {
@@ -223,6 +226,13 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       params: params,
     })
   }
+  const UpdateUserStatus = function (userId: string, body: UpdateUserStatusBody) {
+    return zoomRequest<{}>({
+      method: 'PUT',
+      path: `/users/${userId}/status`,
+      body: body,
+    })
+  }
 
   return {
     ListUsers,
@@ -234,5 +244,6 @@ export default function (zoomRequest: ReturnType<typeof request>) {
     UpdateUser,
     GetUserPermissions,
     GetUserSettings,
+    UpdateUserStatus,
   }
 }
