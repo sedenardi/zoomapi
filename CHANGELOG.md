@@ -1,3 +1,7 @@
+### 0.0.5
+
+- Fix type of `UpdateUserBody.type` field (thanks @evantey14)
+
 ### 0.0.4
 
 - Add `UpdateUserStatus` (thanks @evantey14)
