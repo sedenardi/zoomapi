@@ -107,7 +107,7 @@ export type UpdateUserParams = {
 export type UpdateUserBody = {
   first_name?: string
   last_name?: string
-  type?: UserLoginType
+  type?: UserAccountType
   pmi?: number
   use_pmi?: boolean
   timezone?: string
