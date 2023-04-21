@@ -1,6 +1,8 @@
 import { WebinarDetails } from './webinars';
 import { Meeting } from './meetings';
-import { Registrant } from './common';
+import { Registrant, ZoomOptions } from './common';
+import { IncomingHttpHeaders } from 'http';
+import crypto from 'crypto';
 
 type Payload<T> = {
   account_id: string;
@@ -121,6 +123,11 @@ export type WebhookWebinarRegistrationCancelled = WebhookResponse<
   WebhookWebinarRegistrant
 >;
 
+export type WebhookEndpointValidation = Response<
+  'endpoint.url_validation',
+  { plainToken: string }
+>;
+
 export type WebhookEvent =
   WebhookMeetingStarted |
   WebhookJoinBeforeHost |
@@ -133,4 +140,46 @@ export type WebhookEvent =
   WebhookWebinarRegistrationCreated |
   WebhookWebinarRegistrationApproved |
   WebhookWebinarRegistrationDenied |
-  WebhookWebinarRegistrationCancelled;
+  WebhookWebinarRegistrationCancelled |
+  WebhookEndpointValidation;
+
+export type VerifyWebhookEventParams = {
+  headers: IncomingHttpHeaders;
+  webhook: WebhookEvent;
+};
+export default function(zoomApiOpts: ZoomOptions) {
+  const VerifyWebhookEvent = function(params: VerifyWebhookEventParams) {
+    if (!zoomApiOpts.webhookSecretToken) {
+      throw new Error('Missing webhookSecretToken');
+    }
+    const message = `v0:${params.headers['x-zm-request-timestamp']}:${JSON.stringify(params.webhook)}`;
+  
+    const hashForVerify = crypto.createHmac('sha256', zoomApiOpts.webhookSecretToken).update(message).digest('hex');
+    
+    const signature = `v0=${hashForVerify}`;
+    
+    if (params.headers['x-zm-signature'] === signature) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const GetEndpointValidationResponse = function(webhook: WebhookEvent) {
+    if (!zoomApiOpts.webhookSecretToken) {
+      throw new Error('Missing webhookSecretToken');
+    }
+    if (webhook.event !== 'endpoint.url_validation') {
+      return null;
+    }
+    const hashForValidate = crypto.createHmac('sha256', zoomApiOpts.webhookSecretToken).update(webhook.payload.plainToken).digest('hex');
+    return {
+      plainToken: webhook.payload.plainToken,
+      encryptedToken: hashForValidate
+    };
+  };
+
+  return {
+    VerifyWebhookEvent,
+    GetEndpointValidationResponse
+  };
+}
