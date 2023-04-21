@@ -1,8 +1,14 @@
-export type ZoomOptions = {
+export type ZoomJWTOptions = {
   apiKey: string;
   apiSecret: string;
   tokenExpiresIn?: string | number;
 };
+export type ZoomOAuthOptions = {
+  accountId: string;
+  oauthClientId: string;
+  oauthClientSecret: string;
+};
+export type ZoomOptions = ZoomJWTOptions | ZoomOAuthOptions;
 export type ListResponse = {
   total_records: number;
 };
