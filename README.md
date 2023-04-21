@@ -16,13 +16,28 @@ import zoomApi from 'zoomapi';
 // JWT app
 const client = zoomApi({
   apiKey: process.NODE_ENV.ZoomApiKey,
-  apiSecret: process.NODE_ENV.ZoomApiSecret
+  apiSecret: process.NODE_ENV.ZoomApiSecret,
+  webhookSecretToken: process.NODE_ENV.webhookSecretToken
 });
 // or Server-to-Server OAuth app
 const client = zoomApi({
   accountId: process.NODE_ENV.ZoomAccountId,
   oauthClientId: process.NODE_ENV.ZoomOAuthClientId,
   oauthClientSecret: process.NODE_ENV.ZoomOAuthClientSecret,
+  webhookSecretToken: process.NODE_ENV.webhookSecretToken,
+  /**
+   * optional function called when access token is retrieved
+   */
+  onSetAccessToken: async (token) => {
+    return await setToken(token);
+  },
+  /**
+   * optional function to explicitly supply an access token,
+   * instead of fetching a new one
+   */
+  onGetAccessToken: async () => {
+    return await getToken();
+  }
 });
 
 const users = await client.users.ListUsers();
