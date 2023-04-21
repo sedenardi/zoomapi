@@ -78,6 +78,7 @@ export type WebinarDetails = Webinar & {
 export type ListWebinarsParams = {
   page_size?: number;
   page_number?: number;
+  type?: 'scheduled' |'upcoming';
 };
 export type ListWebinarsResponse = PaginatedResponse & {
   webinars: Webinar[];

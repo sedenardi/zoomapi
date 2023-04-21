@@ -1,6 +1,6 @@
 {
   "name": "zoomapi",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "description": "NodeJS library for working with the Zoom API.",
@@ -32,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "eslint": "^8.38.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
 }
