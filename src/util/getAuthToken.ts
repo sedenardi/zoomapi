@@ -35,9 +35,7 @@ const getJWTAuthToken = function(zoomApiOpts: ZoomJWTOptions) {
 };
 
 const getServerToServerOAuthToken = async function(zoomApiOpts: ZoomOAuthOptions) {
-  // new Buffer(string) if we need to be compatible with Node 8,
-  // otherwise from Node 10 we should use Buffer.from(string)
-  const basicAuthToken = new Buffer(`${zoomApiOpts.oauthClientId}:${zoomApiOpts.oauthClientSecret}`).toString('base64');
+  const basicAuthToken = Buffer.from(`${zoomApiOpts.oauthClientId}:${zoomApiOpts.oauthClientSecret}`).toString('base64');
   const requestOpts = {
     method: 'POST',
     hostname: 'zoom.us',

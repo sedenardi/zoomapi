@@ -8,7 +8,12 @@ export type ZoomOAuthOptions = {
   oauthClientId: string;
   oauthClientSecret: string;
 };
-export type ZoomOptions = ZoomJWTOptions | ZoomOAuthOptions;
+export type ZoomCommonOptions = {
+  webhookSecretToken?: string;
+};
+export type ZoomOptions = ZoomCommonOptions & (
+  ZoomJWTOptions | ZoomOAuthOptions
+);
 export type ListResponse = {
   total_records: number;
 };
