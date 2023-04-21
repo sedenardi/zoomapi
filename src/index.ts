@@ -5,6 +5,7 @@ import reports from './reports';
 import users from './users';
 import webinars from './webinars';
 import webhooks from './webhooks';
+import oauth from './oauth';
 
 import { ZoomOptions } from './common';
 import request from './util/request';
@@ -19,7 +20,8 @@ export default function(zoomApiOpts: ZoomOptions) {
     reports: reports(zoomRequest),
     users: users(zoomRequest),
     webinars: webinars(zoomRequest),
-    webhooks: webhooks(zoomApiOpts)
+    webhooks: webhooks(zoomApiOpts),
+    oauth: oauth(zoomApiOpts)
   };
 }
 
@@ -31,3 +33,4 @@ export * from './reports';
 export * from './users';
 export * from './webhooks';
 export * from './webinars';
+export * from './oauth';

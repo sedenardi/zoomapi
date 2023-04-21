@@ -4,15 +4,9 @@ import type {
   ZoomOptions,
   ZoomJWTOptions,
   ZoomOAuthOptions,
+  OauthTokenResponse,
 } from '../';
 import ZoomError from './ZoomError';
-
-type OauthTokenResponse = {
-  access_token: string;
-  token_type: 'bearer';
-  expire_in: number;
-  scope: string[];
-};
 
 const isJWTOptions = function(zoomApiOpts: ZoomOptions): zoomApiOpts is ZoomJWTOptions {
   return 'apiKey' in zoomApiOpts;
@@ -34,7 +28,7 @@ const getJWTAuthToken = function(zoomApiOpts: ZoomJWTOptions) {
   });
 };
 
-const getServerToServerOAuthToken = async function(zoomApiOpts: ZoomOAuthOptions) {
+export const getServerToServerOAuthToken = async function(zoomApiOpts: ZoomOAuthOptions) {
   const basicAuthToken = Buffer.from(`${zoomApiOpts.oauthClientId}:${zoomApiOpts.oauthClientSecret}`).toString('base64');
   const requestOpts = {
     method: 'POST',
@@ -45,7 +39,7 @@ const getServerToServerOAuthToken = async function(zoomApiOpts: ZoomOAuthOptions
       authorization: `Basic ${basicAuthToken}`
     }
   };
-  return await new Promise<string>((resolve, reject) => {
+  const token = await new Promise<OauthTokenResponse>((resolve, reject) => {
     const httpsRequest = https.request(requestOpts, (res) => {
       const data: any[] = [];
       res.on('data', (chunk) => {
@@ -60,13 +54,12 @@ const getServerToServerOAuthToken = async function(zoomApiOpts: ZoomOAuthOptions
           }
         } catch (err) {
           // JSON parse error
-          reject(new ZoomError(res.statusCode, null, 'Malformed JSON response from Zoom OAuth token API', dataStr));
-          return;
+          return reject(new ZoomError(res.statusCode, null, 'Malformed JSON response from Zoom OAuth token API', dataStr));
         }
         if (res.statusCode < 200 || res.statusCode >= 300) {
           reject(new ZoomError(res.statusCode, body.code, body.message, dataStr));
         } else {
-          resolve((body as OauthTokenResponse).access_token);
+          resolve((body as OauthTokenResponse));
         }
       });
     });
@@ -77,12 +70,21 @@ const getServerToServerOAuthToken = async function(zoomApiOpts: ZoomOAuthOptions
 
     httpsRequest.end();
   });
+  if (zoomApiOpts.onSetAccessToken) {
+    await zoomApiOpts.onSetAccessToken(token);
+  }
+  return token;
 };
 
-export default function getAuthToken(zoomApiOpts: ZoomOptions) {
+export default async function getAuthToken(zoomApiOpts: ZoomOptions) {
   if (isJWTOptions(zoomApiOpts)) {
-    return getJWTAuthToken(zoomApiOpts);
+    return await getJWTAuthToken(zoomApiOpts);
   }
 
-  return getServerToServerOAuthToken(zoomApiOpts);
+  if (zoomApiOpts.onGetAccessToken) {
+    const token = await zoomApiOpts.onGetAccessToken();
+    return token.access_token;
+  }
+  const token = await getServerToServerOAuthToken(zoomApiOpts);
+  return token.access_token;
 }
