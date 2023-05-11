@@ -1,8 +1,25 @@
-export type ZoomOptions = {
+export type ZoomJWTOptions = {
   apiKey: string;
   apiSecret: string;
   tokenExpiresIn?: string | number;
 };
+export type OauthTokenResponse = {
+  access_token: string;
+  token_type: 'bearer';
+  expire_in: number;
+  scope: string[];
+};
+export type ZoomOAuthOptions = {
+  accountId: string;
+  oauthClientId: string;
+  oauthClientSecret: string;
+  onSetAccessToken?: (token: OauthTokenResponse) => Promise<void>;
+  onGetAccessToken?: () => Promise<OauthTokenResponse>;
+};
+export type ZoomCommonOptions = {
+  webhookSecretToken?: string;
+};
+export type ZoomOptions = ZoomCommonOptions & (ZoomJWTOptions | ZoomOAuthOptions);
 export type ListResponse = {
   total_records: number;
 };
