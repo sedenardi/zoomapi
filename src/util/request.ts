@@ -1,6 +1,7 @@
 import https from 'https'
 import getAuthToken from './getAuthToken'
 import { ZoomOptions } from '../'
+import ZoomError from './ZoomError'
 
 const BASE_URL = 'api.zoom.us'
 const API_VERSION = '/v2'
@@ -13,19 +14,6 @@ type ZoomRequestOpts = {
   path: string
   params?: QueryParams
   body?: object
-}
-
-class ZoomError extends Error {
-  httpStatusCode: number
-  errorCode: number | null
-  response: string
-  constructor(httpStatusCode: number, errorCode: number | null, message: string, response: string) {
-    super()
-    this.httpStatusCode = httpStatusCode
-    this.errorCode = errorCode
-    this.message = message
-    this.response = response
-  }
 }
 
 const buildURL = function (url: string, params?: QueryParams) {
@@ -69,7 +57,7 @@ export default function (zoomApiOpts: ZoomOptions) {
             }
           } catch (err) {
             // JSON parse error
-            reject(new ZoomError(res.statusCode, null, `Malformed JSON response from Zoom API`, dataStr))
+            reject(new ZoomError(res.statusCode, null, 'Malformed JSON response from Zoom API', dataStr))
             return
           }
           if (res.statusCode < 200 || res.statusCode >= 300) {
