@@ -1,3 +1,7 @@
+### 1.0.0
+
+- Get latest updates from https://github.com/sedenardi/zoomapi, including adding support for server-to-server OAuth authentication
+
 ### 0.0.5
 
 - Fix type of `UpdateUserBody.type` field (thanks @evantey14)
