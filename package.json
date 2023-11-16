@@ -1,6 +1,6 @@
 {
   "name": "zoomapi",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "description": "NodeJS library for working with the Zoom API.",
@@ -21,18 +21,18 @@
     "prepare": "npm run eslint && npm run clean && npm run build"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "dependencies": {
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.1",
-    "@types/node": "^18.15.13",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.59.0",
-    "eslint": "^8.38.0",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint": "^8.53.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.2.2"
   }
 }
