@@ -115,12 +115,6 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       params: params,
     })
   }
-  const ListPastMeetingInstances = function (meetingId) {
-    return zoomRequest<ListPastMeetingInstancesResponse>({
-      method: 'GET',
-      path: `/past_meetings/${meetingId}/instances`,
-    })
-  }
   const CreateMeeting = function (userId: string, meeting: Meeting) {
     return zoomRequest<Meeting>({
       method: 'POST',
@@ -194,6 +188,12 @@ export default function (zoomRequest: ReturnType<typeof request>) {
     return zoomRequest<GetMeetingRecordingsResponse>({
       method: 'GET',
       path: `/meetings/${meetingId}/recordings`,
+    })
+  }
+  const ListPastMeetingInstances = function (meetingId) {
+    return zoomRequest<ListPastMeetingInstancesResponse>({
+      method: 'GET',
+      path: `/past_meetings/${meetingId}/instances`,
     })
   }
 
