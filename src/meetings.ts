@@ -91,7 +91,7 @@ export type ListMeetingsParams = {
 export type ListMeetingsResponse = PaginatedResponse & {
   meetings: Meeting[]
 }
-export type ListPastMeetingsResponse = { meetings: {start_time: string, uuid: string}[] }
+export type ListPastMeetingInstancesResponse = { meetings: { start_time: string; uuid: string }[] }
 export type GetMeetingParams = {
   occurrence_id?: string
 }
@@ -115,10 +115,10 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       params: params,
     })
   }
-  const ListPastMeetings = function (meetingId) {
-    return zoomRequest<ListPastMeetingsResponse>({
-        method: 'GET',
-        path: `/past_meetings/${meetingId}/instances`,
+  const ListPastMeetingInstances = function (meetingId) {
+    return zoomRequest<ListPastMeetingInstancesResponse>({
+      method: 'GET',
+      path: `/past_meetings/${meetingId}/instances`,
     })
   }
   const CreateMeeting = function (userId: string, meeting: Meeting) {
@@ -199,7 +199,7 @@ export default function (zoomRequest: ReturnType<typeof request>) {
 
   return {
     ListMeetings,
-    ListPastMeetings,
+    ListPastMeetingInstances,
     CreateMeeting,
     GetMeeting,
     UpdateMeeting,
