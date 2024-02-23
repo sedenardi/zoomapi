@@ -1,3 +1,6 @@
+### 1.0.1
+- Add `ListPastMeetingInstances`
+
 ### 1.0.0
 
 - Get latest updates from https://github.com/sedenardi/zoomapi, including adding support for server-to-server OAuth authentication
