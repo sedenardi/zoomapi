@@ -129,7 +129,7 @@ export type WebinarParticipantReportParams = {
   next_page_token?: string;
 };
 
-interface WebinarParticipantReportResponse {
+export interface WebinarParticipantReportResponse {
   next_page_token: string;
   page_count: number;
   page_size: number;

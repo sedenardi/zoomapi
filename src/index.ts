@@ -9,6 +9,7 @@ import oauth from './oauth';
 
 import { ZoomOptions } from './common';
 import request from './util/request';
+import chat from './chat';
 
 export default function(zoomApiOpts: ZoomOptions) {
   const zoomRequest = request(zoomApiOpts);
@@ -19,6 +20,7 @@ export default function(zoomApiOpts: ZoomOptions) {
     recordings: recordings(zoomRequest),
     reports: reports(zoomRequest),
     users: users(zoomRequest),
+    chat: chat(zoomRequest),
     webinars: webinars(zoomRequest),
     webhooks: webhooks(zoomApiOpts),
     oauth: oauth(zoomApiOpts)
@@ -34,3 +36,4 @@ export * from './users';
 export * from './webhooks';
 export * from './webinars';
 export * from './oauth';
+export * from './chat';

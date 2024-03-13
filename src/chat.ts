@@ -24,7 +24,7 @@ export type SendChatMessageParams = {
     reply_main_message_id: string;
     to_channel: string;
     to_contact: string;
-}
+};
 
 interface AtItemsItem {
     at_contact: string;
@@ -45,23 +45,23 @@ export type SendMessageResponse = {
 };
   
 export default function (zoomRequest: ReturnType<typeof request>) {
-    const ListChannelMembers = (params: ListChannelMembersParams) => {
-        return zoomRequest<ListChannelMembersResponse>({
-            method: 'GET',
-            path: `/chat/channels/${params.channel_id}/members`,
-            params,
-        });
-    }
-    const SendChatMessage = (params: SendChatMessageParams) => {
-        return zoomRequest<SendMessageResponse>({
-            method: 'POST',
-            path: '/chat/users/me/messages',
-            body: params,
-        });
-    }
+  const ListChannelMembers = (params: ListChannelMembersParams) => {
+    return zoomRequest<ListChannelMembersResponse>({
+      method: 'GET',
+      path: `/chat/channels/${params.channel_id}/members`,
+      params,
+    });
+  };
+  const SendChatMessage = (params: SendChatMessageParams) => {
+    return zoomRequest<SendMessageResponse>({
+      method: 'POST',
+      path: '/chat/users/me/messages',
+      body: params,
+    });
+  };
 
-    return {
-        ListChannelMembers,
-        SendChatMessage,
-    }
+  return {
+    ListChannelMembers,
+    SendChatMessage,
+  };
 }
