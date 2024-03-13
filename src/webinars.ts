@@ -128,21 +128,29 @@ export type WebinarParticipantReportParams = {
   page_size?: number;
   next_page_token?: string;
 };
-export type WebinarParticipant = {
+
+interface WebinarParticipantReportResponse {
+  next_page_token: string;
+  page_count: number;
+  page_size: number;
+  total_records: number;
+  participants: ParticipantsItem[];
+}
+
+interface ParticipantsItem {
+  customer_key: string;
+  duration: number;
+  failover: boolean;
   id: string;
-  user_id: string;
-  name: string;
-  user_email: string;
   join_time: string;
   leave_time: string;
-  duration: number;
-  attentiveness_score: string;
-};
-export type WebinarParticipantReportResponse = {
-  next_page_token: string;
-  participants: WebinarParticipant[];
-  total_records: number;
-};
+  name: string;
+  registrant_id: string;
+  status: string;
+  user_email: string;
+  user_id: string;
+  participant_user_id: string;
+}
 
 export default function(zoomRequest: ReturnType<typeof request>) {
   const ListWebinars = function(userId: string, params?: ListWebinarsParams) {
