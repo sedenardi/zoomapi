@@ -124,6 +124,25 @@ export type WebinarRegistrationQuestions = {
     answers: string[];
   }[];
 };
+export type WebinarParticipantReportParams = {
+  page_size?: number;
+  next_page_token?: string;
+};
+export type WebinarParticipant = {
+  id: string;
+  user_id: string;
+  name: string;
+  user_email: string;
+  join_time: string;
+  leave_time: string;
+  duration: number;
+  attentiveness_score: string;
+};
+export type WebinarParticipantReportResponse = {
+  next_page_token: string;
+  participants: WebinarParticipant[];
+  total_records: number;
+};
 
 export default function(zoomRequest: ReturnType<typeof request>) {
   const ListWebinars = function(userId: string, params?: ListWebinarsParams) {
@@ -232,6 +251,13 @@ export default function(zoomRequest: ReturnType<typeof request>) {
       path: `/webinars/${webinarId}/registrants/questions`
     });
   };
+  const ReportWebinarParticipants = function(webinarId: string, params?: WebinarParticipantReportParams) {
+    return zoomRequest<WebinarParticipantReportResponse>({
+      method: 'GET',
+      path: `/report/webinars/${webinarId}/participants`,
+      params: params
+    });
+  };
 
   return {
     ListWebinars,
@@ -248,6 +274,7 @@ export default function(zoomRequest: ReturnType<typeof request>) {
     UpdateWebinarRegistrantStatus,
     ListPastWebinarQA,
     DeleteWebinarRegistrant,
-    ListRegistrationQuestions
+    ListRegistrationQuestions,
+    ReportWebinarParticipants
   };
 }
