@@ -2,7 +2,7 @@
 
 NodeJS library for working with the Zoom API.
 
-`zoomapi` provides server-side access to the [Zoom APIs](https://marketplace.zoom.us/docs/api-reference/introduction) via [JWT access tokens (deprecation scheduled for June 2023)](https://marketplace.zoom.us/docs/guides/build/jwt-app/) or [server-to-server OAuth](https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/). It's written completely in Typescript, and only has one dependency. Works on NodeJS version 8 and higher.
+`zoomapi` provides server-side access to the [Zoom APIs](https://marketplace.zoom.us/docs/api-reference/introduction) via [JWT access tokens (deprecation scheduled for June 2023)](https://marketplace.zoom.us/docs/guides/build/jwt-app/) or [server-to-server OAuth](https://marketplace.zoom.us/docs/guides/build/server-to-server-oauth-app/). It's written completely in Typescript, and only has one dependency. Works on NodeJS version 18 and higher.
 
 ```js
 npm i zoomapi
