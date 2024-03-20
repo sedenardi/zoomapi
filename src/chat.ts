@@ -44,7 +44,7 @@ export type SendMessageResponse = {
   id?: string;
 };
 
-interface ListUserChannelsResponse {
+export interface ListUserChannelsResponse {
   channels: ChannelsItem[];
   next_page_token: string;
   page_size: number;
