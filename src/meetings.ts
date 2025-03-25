@@ -106,6 +106,9 @@ export type GetMeetingInvitationResponse = {
   invitation: string
 }
 export type GetMeetingRecordingsResponse = RecordingMeeting
+export type UpdateMeetingSurveyParams = {
+	third_party_survey: string
+}
 
 export default function (zoomRequest: ReturnType<typeof request>) {
   const ListMeetings = function (userId: string, params?: ListMeetingsParams) {
@@ -190,10 +193,17 @@ export default function (zoomRequest: ReturnType<typeof request>) {
       path: `/meetings/${meetingId}/recordings`,
     })
   }
-  const ListPastMeetingInstances = function (meetingId) {
+  const ListPastMeetingInstances = function (meetingId: string) {
     return zoomRequest<ListPastMeetingInstancesResponse>({
       method: 'GET',
       path: `/past_meetings/${meetingId}/instances`,
+    })
+  }
+  const UpdateMeetingSurvey = function (meetingId: string, params: UpdateMeetingSurveyParams) {
+    return zoomRequest<{}>({
+      method: 'PATCH',
+      path: `/meetings/${meetingId}/survey`,
+      body: params,
     })
   }
 
@@ -210,5 +220,6 @@ export default function (zoomRequest: ReturnType<typeof request>) {
     UpdateRegistrantStatus,
     GetMeetingInvitation,
     GetMeetingRecordings,
+	UpdateMeetingSurvey,
   }
 }
