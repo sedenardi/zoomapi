@@ -84,11 +84,14 @@ export type Meeting = {
   recurrence?: Recurrence;
 };
 export type ListMeetingsParams = {
-  type?: 'scheduled' | 'live' | 'upcoming';
+  type?: 'scheduled' | 'live' | 'upcoming' | 'upcoming_meetings' | 'previous_meetings';
   page_size?: number;
   page_number?: number;
+  next_page_token?: string;
 };
 export type ListMeetingsResponse = PaginatedResponse & {
+  // Note, the properties on the list meeting response is truncated.
+  // Please see https://developers.zoom.us/docs/api/meetings/#tag/meetings/get/users/{userId}/meetings
   meetings: Meeting[];
 };
 export type GetMeetingParams = {
