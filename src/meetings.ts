@@ -96,6 +96,7 @@ export type ListMeetingsResponse = PaginatedResponse & {
 };
 export type GetMeetingParams = {
   occurrence_id?: string;
+  show_previous_occurrences?: boolean;
 };
 export type DeleteMeetingParams = {
   occurrence_id?: string;
